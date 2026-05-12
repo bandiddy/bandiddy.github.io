@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alvin Joseph Garcia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0d0d0d; --bg2: #141414; --bg3: #1c1c1c;
+      --border: #2a2a2a; --text: #e8e8e8; --text-muted: #888; --text-dim: #555;
+      --accent: #c8f0a0; --accent2: #a0c8f0; --accent3: #f0c8a0;
+      --sans: 'Inter', sans-serif; --serif: 'DM Serif Display', serif;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 15px; line-height: 1.65; min-height: 100vh; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(13,13,13,0.88); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo { font-family: var(--serif); font-size: 18px; color: var(--text); letter-spacing: 0.02em; }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; cursor: pointer; }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
+
+    section { display: none; min-height: 100vh; padding: 120px 48px 80px; max-width: 1100px; margin: 0 auto; }
+    section.active { display: block; }
+
+    /* HERO */
+    .hero { padding-top: 80px; padding-bottom: 60px; display: grid; grid-template-columns: 1fr 400px; gap: 60px; align-items: center; }
+    .hero-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 24px; font-weight: 500; }
+    .hero h1 { font-family: var(--serif); font-size: clamp(42px, 6vw, 80px); line-height: 1.05; color: var(--text); margin-bottom: 12px; }
+    .hero h1 em { font-style: italic; color: var(--text-muted); }
+    .hero-sub { font-size: 15px; color: var(--text-muted); max-width: 480px; margin-top: 24px; line-height: 1.8; }
+    .hero-links { display: flex; gap: 16px; margin-top: 40px; flex-wrap: wrap; }
+    .hero-visual { display: flex; align-items: center; justify-content: center; }
+    .hero-visual svg { width: 100%; max-width: 400px; }
+
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 24px; border-radius: 4px; font-size: 13px; font-weight: 500; letter-spacing: 0.04em; text-decoration: none; transition: all 0.2s; cursor: pointer; border: none; font-family: var(--sans); }
+    .btn-primary { background: var(--accent); color: #0d0d0d; }
+    .btn-primary:hover { background: #b8e88a; }
+    .btn-ghost { background: transparent; color: var(--text-muted); border: 1px solid var(--border); }
+    .btn-ghost:hover { border-color: var(--text-muted); color: var(--text); }
+
+    .divider { width: 40px; height: 1px; background: var(--border); margin: 56px 0; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .about-text p { color: var(--text-muted); margin-bottom: 16px; }
+    .about-text p strong { color: var(--text); font-weight: 500; }
+    .stat-list { display: flex; flex-direction: column; gap: 20px; }
+    .stat-item { display: flex; flex-direction: column; border-left: 2px solid var(--border); padding-left: 20px; transition: border-color 0.2s; }
+    .stat-item:hover { border-color: var(--accent); }
+    .stat-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+    .stat-value { font-size: 15px; color: var(--text); }
+
+    .section-eyebrow { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px; }
+    .section-title { font-family: var(--serif); font-size: clamp(32px, 4vw, 48px); color: var(--text); margin-bottom: 48px; }
+
+    .visual-banner { width: 100%; border-radius: 12px; overflow: hidden; margin: 48px 0; border: 1px solid var(--border); }
+    .visual-banner svg { display: block; width: 100%; }
+
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 64px; }
+    .skill-card { background: var(--bg2); padding: 28px; transition: background 0.2s; }
+    .skill-card:hover { background: var(--bg3); }
+    .skill-category { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    .skill-card h3 { font-size: 15px; font-weight: 500; color: var(--text); margin-bottom: 10px; }
+    .skill-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+    .tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag { font-size: 11px; padding: 3px 10px; border-radius: 100px; border: 1px solid var(--border); color: var(--text-dim); letter-spacing: 0.04em; }
+
+    /* TIMELINE */
+    .timeline { display: flex; flex-direction: column; }
+    .timeline-item { display: grid; grid-template-columns: 180px 1fr; gap: 40px; padding: 40px 0; border-top: 1px solid var(--border); }
+    .timeline-item:last-child { border-bottom: 1px solid var(--border); }
+    .timeline-meta { display: flex; flex-direction: column; gap: 6px; padding-top: 2px; }
+    .timeline-date { font-size: 12px; color: var(--text-dim); letter-spacing: 0.04em; }
+    .timeline-company { font-size: 13px; color: var(--text-muted); font-weight: 500; }
+    .timeline-location { font-size: 12px; color: var(--text-dim); }
+    .timeline-content h3 { font-size: 17px; font-weight: 500; color: var(--text); margin-bottom: 16px; }
+    .timeline-content ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .timeline-content ul li { font-size: 14px; color: var(--text-muted); padding-left: 16px; position: relative; }
+    .timeline-content ul li::before { content: '—'; position: absolute; left: 0; color: var(--text-dim); }
+
+    /* INDUSTRY */
+    .industry-intro { font-size: 16px; color: var(--text-muted); max-width: 640px; margin-bottom: 56px; line-height: 1.8; }
+    .industry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 64px; }
+    .industry-card { background: var(--bg2); border: 1px solid var(--border); border-radius: 8px; padding: 32px; transition: border-color 0.2s, background 0.2s; }
+    .industry-card:hover { border-color: #3a3a3a; background: var(--bg3); }
+    .industry-icon { font-size: 28px; margin-bottom: 16px; }
+    .industry-card h3 { font-family: var(--serif); font-size: 22px; color: var(--text); margin-bottom: 12px; }
+    .industry-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .cert-row { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+    .cert-badge { font-size: 11px; padding: 4px 12px; border-radius: 4px; background: rgba(200,240,160,0.08); border: 1px solid rgba(200,240,160,0.2); color: var(--accent); letter-spacing: 0.04em; }
+    .cert-badge.blue { background: rgba(160,200,240,0.08); border-color: rgba(160,200,240,0.2); color: var(--accent2); }
+    .cert-badge.orange { background: rgba(240,200,160,0.08); border-color: rgba(240,200,160,0.2); color: var(--accent3); }
+
+    /* TOPGOLF CARD */
+
+
+    /* RESUME */
+    .resume-wrapper { display: grid; grid-template-columns: 260px 1fr; gap: 64px; align-items: start; }
+    .resume-sidebar { position: sticky; top: 100px; }
+    .resume-sidebar h3 { font-family: var(--serif); font-size: 24px; color: var(--text); margin-bottom: 8px; }
+    .resume-sidebar p { font-size: 13px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+    .download-stack { display: flex; flex-direction: column; gap: 10px; }
+    .resume-sidebar-visual { margin-top: 32px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border); }
+    .resume-sidebar-visual svg { display: block; width: 100%; }
+
+    .resume-main h2 { font-family: var(--serif); font-size: 36px; color: var(--text); margin-bottom: 4px; }
+    .resume-main .resume-title-line { font-size: 13px; color: var(--text-muted); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 32px; }
+    .resume-block { margin-bottom: 44px; }
+    .resume-block-label { font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: block; }
+    .resume-entry { display: grid; grid-template-columns: 1fr auto; gap: 12px; margin-bottom: 28px; align-items: start; }
+    .resume-entry-title { font-size: 15px; font-weight: 500; color: var(--text); }
+    .resume-entry-company { font-size: 13px; color: var(--text-muted); margin-top: 2px; margin-bottom: 10px; }
+    .resume-entry-date { font-size: 12px; color: var(--text-dim); white-space: nowrap; text-align: right; }
+    .resume-entry ul { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .resume-entry ul li { font-size: 13px; color: var(--text-muted); padding-left: 14px; position: relative; }
+    .resume-entry ul li::before { content: '·'; position: absolute; left: 0; color: var(--text-dim); }
+    .competency-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .competency-item { font-size: 13px; color: var(--text-muted); padding: 8px 14px; background: var(--bg2); border-radius: 4px; border: 1px solid var(--border); }
+
+    /* CONTACT */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 600px; }
+    .contact-link { display: flex; align-items: center; gap: 14px; padding: 20px 24px; border: 1px solid var(--border); border-radius: 8px; text-decoration: none; color: var(--text-muted); font-size: 14px; transition: all 0.2s; background: var(--bg2); }
+    .contact-link:hover { border-color: #3a3a3a; color: var(--text); background: var(--bg3); }
+    .contact-link-icon { font-size: 20px; }
+    .contact-link-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); display: block; margin-bottom: 2px; }
+
+    footer { border-top: 1px solid var(--border); padding: 32px 48px; display: flex; justify-content: space-between; align-items: center; max-width: 1100px; margin: 80px auto 0; }
+    footer p { font-size: 12px; color: var(--text-dim); }
+
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { gap: 20px; }
+      section { padding: 100px 24px 60px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-visual { display: none; }
+      .about-grid, .industry-grid, .resume-wrapper, .contact-grid { grid-template-columns: 1fr; }
+
+      .topgolf-visual { display: none; }
+      .timeline-item { grid-template-columns: 1fr; gap: 8px; }
+      .resume-sidebar { position: static; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">Alvin Joseph Garcia</div>
+    <ul class="nav-links">
+      <li><a onclick="show('home')" class="active" id="nav-home">Home</a></li>
+      <li><a onclick="show('resume')" id="nav-resume">Tech Résumé</a></li>
+      <li><a onclick="show('industry')" id="nav-industry">Industry</a></li>
+      <li><a onclick="show('contact')" id="nav-contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- ══ HOME ══ -->
+  <section id="home" class="active">
+    <div class="hero">
+      <div>
+        <p class="hero-eyebrow">Walnut, CA · Open to opportunities</p>
+        <h1>Alvin<br /><em>Joseph</em><br />Garcia</h1>
+        <p class="hero-sub">
+          Technical professional bridging the gap between engineering and operations.
+          Developer background, analyst mindset, obsessive about precision —
+          and a genuine passion for the world beyond the screen.
+        </p>
+        <div class="hero-links">
+          <a class="btn btn-primary" onclick="show('resume')">View Résumé</a>
+          <a href="https://github.com/bandiddy" target="_blank" class="btn btn-ghost">GitHub ↗</a>
+          <a href="https://linkedin.com/in/alvingarcia" target="_blank" class="btn btn-ghost">LinkedIn ↗</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <svg viewBox="0 0 400 430" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="hg1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#1a2a1a"/><stop offset="100%" stop-color="#0d1a0d"/>
+            </linearGradient>
+            <filter id="glow"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          </defs>
+          <!-- Monitor -->
+          <rect x="20" y="20" width="360" height="238" rx="12" fill="url(#hg1)" stroke="#2a3a2a" stroke-width="1.5"/>
+          <rect x="32" y="32" width="336" height="214" rx="6" fill="#080e08"/>
+          <circle cx="52" cy="46" r="5" fill="#ff5f57"/>
+          <circle cx="68" cy="46" r="5" fill="#febc2e"/>
+          <circle cx="84" cy="46" r="5" fill="#28c840"/>
+          <!-- Code lines animated feel -->
+          <rect x="48" y="64" width="90" height="6" rx="3" fill="#c8f0a0" opacity="0.9" filter="url(#glow)"/>
+          <rect x="145" y="64" width="50" height="6" rx="3" fill="#a0c8f0" opacity="0.75"/>
+          <rect x="202" y="64" width="35" height="6" rx="3" fill="#f0c8a0" opacity="0.65"/>
+          <rect x="60" y="80" width="60" height="5" rx="2.5" fill="#a0c8f0" opacity="0.55"/>
+          <rect x="128" y="80" width="85" height="5" rx="2.5" fill="#c8f0a0" opacity="0.45"/>
+          <rect x="220" y="80" width="45" height="5" rx="2.5" fill="#555" opacity="0.35"/>
+          <rect x="48" y="95" width="110" height="5" rx="2.5" fill="#f0c8a0" opacity="0.65"/>
+          <rect x="166" y="95" width="60" height="5" rx="2.5" fill="#c8f0a0" opacity="0.55"/>
+          <rect x="234" y="95" width="70" height="5" rx="2.5" fill="#a0c8f0" opacity="0.45"/>
+          <rect x="60" y="110" width="45" height="5" rx="2.5" fill="#c8f0a0" opacity="0.8" filter="url(#glow)"/>
+          <rect x="113" y="110" width="100" height="5" rx="2.5" fill="#555" opacity="0.3"/>
+          <rect x="48" y="125" width="130" height="5" rx="2.5" fill="#a0c8f0" opacity="0.6"/>
+          <rect x="186" y="125" width="65" height="5" rx="2.5" fill="#f0c8a0" opacity="0.45"/>
+          <rect x="60" y="140" width="70" height="5" rx="2.5" fill="#555" opacity="0.25"/>
+          <rect x="138" y="140" width="55" height="5" rx="2.5" fill="#c8f0a0" opacity="0.65"/>
+          <rect x="200" y="140" width="85" height="5" rx="2.5" fill="#a0c8f0" opacity="0.45"/>
+          <rect x="48" y="155" width="40" height="5" rx="2.5" fill="#c8f0a0" opacity="0.9" filter="url(#glow)"/>
+          <rect x="96" y="155" width="105" height="5" rx="2.5" fill="#f0c8a0" opacity="0.45"/>
+          <rect x="60" y="170" width="155" height="5" rx="2.5" fill="#555" opacity="0.2"/>
+          <rect x="48" y="185" width="85" height="5" rx="2.5" fill="#a0c8f0" opacity="0.55"/>
+          <rect x="140" y="185" width="60" height="5" rx="2.5" fill="#c8f0a0" opacity="0.45"/>
+          <rect x="208" y="185" width="90" height="5" rx="2.5" fill="#f0c8a0" opacity="0.35"/>
+          <rect x="48" y="201" width="9" height="14" rx="1" fill="#c8f0a0" opacity="0.9" filter="url(#glow)">
+            <animate attributeName="opacity" values="0.9;0;0.9" dur="1.2s" repeatCount="indefinite"/>
+          </rect>
+          <!-- Stand -->
+          <rect x="185" y="258" width="30" height="26" rx="2" fill="#1a2a1a"/>
+          <rect x="155" y="281" width="90" height="8" rx="4" fill="#1a2a1a"/>
+          <!-- Skill pills -->
+          <rect x="0" y="308" width="118" height="30" rx="15" fill="#141e14" stroke="#2a3a2a" stroke-width="1"/>
+          <text x="59" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#c8f0a0">React.js</text>
+          <rect x="128" y="298" width="108" height="30" rx="15" fill="#141e14" stroke="#2a3a2a" stroke-width="1"/>
+          <text x="182" y="317" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#a0c8f0">Node.js</text>
+          <rect x="248" y="308" width="140" height="30" rx="15" fill="#141e14" stroke="#2a3a2a" stroke-width="1"/>
+          <text x="318" y="327" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0c8a0">Tech Liaison</text>
+          <rect x="16" y="350" width="100" height="30" rx="15" fill="#141e14" stroke="#2a3a2a" stroke-width="1"/>
+          <text x="66" y="369" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#c8f0a0">MySQL</text>
+          <rect x="130" y="344" width="88" height="30" rx="15" fill="#141e14" stroke="#2a3a2a" stroke-width="1"/>
+          <text x="174" y="363" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#888">Git</text>
+          <rect x="232" y="352" width="148" height="30" rx="15" fill="#141e14" stroke="#2a3a2a" stroke-width="1"/>
+          <text x="306" y="371" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#f0c8a0">Documentation</text>
+          <!-- Pulse dots -->
+          <circle cx="200" cy="294" r="3" fill="#c8f0a0" opacity="0.5"><animate attributeName="opacity" values="0.5;1;0.5" dur="2s" repeatCount="indefinite"/></circle>
+          <circle cx="68" cy="303" r="2" fill="#a0c8f0" opacity="0.4"><animate attributeName="opacity" values="0.4;0.9;0.4" dur="1.8s" repeatCount="indefinite"/></circle>
+          <circle cx="318" cy="303" r="2" fill="#f0c8a0" opacity="0.4"><animate attributeName="opacity" values="0.4;0.9;0.4" dur="2.2s" repeatCount="indefinite"/></circle>
+          <circle cx="66" cy="340" r="2" fill="#c8f0a0" opacity="0.3"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.5s" repeatCount="indefinite"/></circle>
+          <circle cx="174" cy="338" r="2" fill="#888" opacity="0.3"><animate attributeName="opacity" values="0.3;0.7;0.3" dur="1.9s" repeatCount="indefinite"/></circle>
+          <circle cx="306" cy="342" r="2" fill="#f0c8a0" opacity="0.3"><animate attributeName="opacity" values="0.3;0.8;0.3" dur="2.1s" repeatCount="indefinite"/></circle>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Tech stack banner -->
+    <div class="visual-banner">
+      <svg viewBox="0 0 1060 110" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="fl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0a120a" stop-opacity="1"/><stop offset="8%" stop-color="#0a120a" stop-opacity="0"/></linearGradient>
+          <linearGradient id="fr" x1="0" y1="0" x2="1" y2="0"><stop offset="92%" stop-color="#0a120a" stop-opacity="0"/><stop offset="100%" stop-color="#0a120a" stop-opacity="1"/></linearGradient>
+        </defs>
+        <rect width="1060" height="110" fill="#0a120a"/>
+        <g font-family="Inter,sans-serif" font-size="11" letter-spacing="0.1em" text-anchor="middle">
+          <rect x="20" y="16" width="80" height="28" rx="14" fill="none" stroke="#c8f0a0" stroke-width="1" opacity="0.4"/><text x="60" y="34" fill="#c8f0a0" opacity="0.8">HTML5</text>
+          <rect x="114" y="16" width="68" height="28" rx="14" fill="none" stroke="#c8f0a0" stroke-width="1" opacity="0.4"/><text x="148" y="34" fill="#c8f0a0" opacity="0.8">CSS3</text>
+          <rect x="196" y="16" width="110" height="28" rx="14" fill="none" stroke="#a0c8f0" stroke-width="1" opacity="0.4"/><text x="251" y="34" fill="#a0c8f0" opacity="0.8">JavaScript</text>
+          <rect x="320" y="16" width="90" height="28" rx="14" fill="none" stroke="#a0c8f0" stroke-width="1" opacity="0.4"/><text x="365" y="34" fill="#a0c8f0" opacity="0.8">React.js</text>
+          <rect x="424" y="16" width="90" height="28" rx="14" fill="none" stroke="#f0c8a0" stroke-width="1" opacity="0.4"/><text x="469" y="34" fill="#f0c8a0" opacity="0.8">Node.js</text>
+          <rect x="528" y="16" width="70" height="28" rx="14" fill="none" stroke="#f0c8a0" stroke-width="1" opacity="0.4"/><text x="563" y="34" fill="#f0c8a0" opacity="0.8">jQuery</text>
+          <rect x="612" y="16" width="72" height="28" rx="14" fill="none" stroke="#c8f0a0" stroke-width="1" opacity="0.4"/><text x="648" y="34" fill="#c8f0a0" opacity="0.8">MySQL</text>
+          <rect x="698" y="16" width="104" height="28" rx="14" fill="none" stroke="#a0c8f0" stroke-width="1" opacity="0.4"/><text x="750" y="34" fill="#a0c8f0" opacity="0.8">MongoDB</text>
+          <rect x="816" y="16" width="84" height="28" rx="14" fill="none" stroke="#f0c8a0" stroke-width="1" opacity="0.4"/><text x="858" y="34" fill="#f0c8a0" opacity="0.8">Firebase</text>
+          <rect x="914" y="16" width="56" height="28" rx="14" fill="none" stroke="#c8f0a0" stroke-width="1" opacity="0.4"/><text x="942" y="34" fill="#c8f0a0" opacity="0.8">Git</text>
+          <rect x="40" y="60" width="80" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="80" y="78" fill="#555">Heroku</text>
+          <rect x="136" y="60" width="100" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="186" y="78" fill="#555">Bootstrap</text>
+          <rect x="252" y="60" width="70" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="287" y="78" fill="#555">AJAX</text>
+          <rect x="338" y="60" width="100" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="388" y="78" fill="#555">Power BI</text>
+          <rect x="454" y="60" width="82" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="495" y="78" fill="#555">Tableau</text>
+          <rect x="552" y="60" width="60" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="582" y="78" fill="#555">SQL</text>
+          <rect x="628" y="60" width="112" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="684" y="78" fill="#555">Bluebeam</text>
+          <rect x="756" y="60" width="92" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="802" y="78" fill="#555">Materialize</text>
+          <rect x="864" y="60" width="64" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="896" y="78" fill="#555">Bulma</text>
+          <rect x="944" y="60" width="76" height="28" rx="14" fill="none" stroke="#444" stroke-width="1" opacity="0.5"/><text x="982" y="78" fill="#555">AJAX</text>
+        </g>
+        <rect width="1060" height="110" fill="url(#fl)"/>
+        <rect width="1060" height="110" fill="url(#fr)"/>
+      </svg>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a <strong>front-end developer and technical liaison</strong> with a background in fintech and a laser-focused attention to detail shaped by years in production-grade software environments.</p>
+        <p>My edge: I think like an engineer but communicate like a people-person. I know what it means when a deployment breaks — and I know how to write the memo explaining why without losing either audience.</p>
+        <p>Beyond the screen, I bring hospitality instincts honed in <strong>fine dining and live entertainment venues</strong> — which means I've always understood that the experience matters as much as the output.</p>
+      </div>
+      <div class="stat-list">
+        <div class="stat-item">
+          <span class="stat-label">Current Role</span>
+          <span class="stat-value">Front End Developer · Tech Liaison, InvestCloud</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Education</span>
+          <span class="stat-value">BA Cultural Anthropology · BA Asian American Studies, UCSB</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Certifications</span>
+          <span class="stat-value">MERN Full-Stack Development, UC Irvine · Computer Information Systems, Fullerton College</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Also known for</span>
+          <span class="stat-value">Certified Sommelier (CMS + WSET Level 2) · Golf Enthusiast</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <p class="section-eyebrow">Core Capabilities</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <p class="skill-category">Front-End Dev</p>
+        <h3>Web Engineering</h3>
+        <p>Hands-on experience building and maintaining client-facing interfaces in production fintech environments.</p>
+        <div class="tag-row"><span class="tag">React.js</span><span class="tag">Node.js</span><span class="tag">HTML5/CSS</span><span class="tag">JavaScript</span></div>
+      </div>
+      <div class="skill-card">
+        <p class="skill-category">Data & Reporting</p>
+        <h3>Analysis & Validation</h3>
+        <p>Data validation, automated reporting, pattern interpretation, and QA for high-stakes financial software outputs.</p>
+        <div class="tag-row"><span class="tag">SQL</span><span class="tag">Power BI</span><span class="tag">Tableau</span><span class="tag">Excel</span></div>
+      </div>
+      <div class="skill-card">
+        <p class="skill-category">Coordination</p>
+        <h3>Tech Liaison & Docs</h3>
+        <p>Translating between engineering and every other department — documentation that's clean, versioned, and delivery-ready.</p>
+        <div class="tag-row"><span class="tag">ITGC</span><span class="tag">SOX</span><span class="tag">Bluebeam</span><span class="tag">Audit</span></div>
+      </div>
+      <div class="skill-card">
+        <p class="skill-category">Database & Deployment</p>
+        <h3>Infra Familiarity</h3>
+        <p>Comfortable across the full stack — from database queries to version control and deployment pipelines.</p>
+        <div class="tag-row"><span class="tag">MySQL</span><span class="tag">MongoDB</span><span class="tag">Firebase</span><span class="tag">Git</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TECH RÉSUMÉ ══ -->
+  <section id="resume">
+    <div class="resume-wrapper">
+      <div class="resume-sidebar">
+        <h3>Tech Résumé</h3>
+        <p>Full background in software development, technical documentation, and cross-functional coordination.</p>
+        <div class="download-stack">
+          <a href="mailto:alvinjoseph.garcia@gmail.com" class="btn btn-ghost" style="justify-content:center;">Request PDF ↗</a>
+        </div>
+        <div class="resume-sidebar-visual">
+          <svg viewBox="0 0 260 210" xmlns="http://www.w3.org/2000/svg">
+            <rect width="260" height="210" fill="#0a120a"/>
+            <!-- Stacked docs -->
+            <rect x="68" y="135" width="130" height="155" rx="6" fill="#141e14" stroke="#2a3a2a" stroke-width="1" transform="rotate(-8,133,135)"/>
+            <rect x="68" y="128" width="130" height="155" rx="6" fill="#141e14" stroke="#2a3a2a" stroke-width="1" transform="rotate(-3,133,128)"/>
+            <rect x="68" y="122" width="130" height="155" rx="6" fill="#1a261a" stroke="#3a4a3a" stroke-width="1"/>
+            <rect x="86" y="140" width="80" height="4" rx="2" fill="#c8f0a0" opacity="0.6"/>
+            <rect x="86" y="152" width="96" height="3" rx="1.5" fill="#555" opacity="0.45"/>
+            <rect x="86" y="162" width="70" height="3" rx="1.5" fill="#555" opacity="0.35"/>
+            <rect x="86" y="172" width="88" height="3" rx="1.5" fill="#555" opacity="0.3"/>
+            <rect x="86" y="182" width="56" height="3" rx="1.5" fill="#a0c8f0" opacity="0.45"/>
+            <!-- Checkmark badge -->
+            <circle cx="184" cy="58" r="24" fill="#0d1f0d" stroke="#c8f0a0" stroke-width="1.5"/>
+            <polyline points="173,58 181,66 196,49" fill="none" stroke="#c8f0a0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="130" y="106" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#444" letter-spacing="0.12em">ZERO DEFECTS</text>
+          </svg>
+        </div>
+      </div>
+
+      <div class="resume-main">
+        <h2>Alvin Joseph Garcia</h2>
+        <p class="resume-title-line">Front-End Developer · Technical Liaison · Documentation Specialist</p>
+
+        <div class="resume-block">
+          <span class="resume-block-label">Experience</span>
+          <div class="resume-entry">
+            <div>
+              <p class="resume-entry-title">Front End Developer · Technical Liaison</p>
+              <p class="resume-entry-company">InvestCloud, Inc — Los Angeles, CA</p>
+              <ul>
+                <li>Built and maintained client-facing front-end interfaces in a live fintech environment — writing clean, production-grade code in React, JavaScript, and Node.js that real users depended on.</li>
+                <li>Owned the documentation layer end-to-end: drafting release notes, formatting technical specs, and QA'ing every file before it left the building — catching the kind of errors that only a developer would know to look for.</li>
+                <li>Served as the human translation layer between engineering and everyone else — breaking down complex technical concepts for non-developer stakeholders without losing the thread on either side.</li>
+                <li>Applied a developer's instinct for precision to documentation — a single misplaced reference in a spec causes the same downstream chaos as a missing semicolon in code, and I treated both with equal seriousness.</li>
+              </ul>
+            </div>
+            <p class="resume-entry-date">Jan 2020 – Present</p>
+          </div>
+          <div class="resume-entry">
+            <div>
+              <p class="resume-entry-title">Front-End Web Design · Marketing Intern</p>
+              <p class="resume-entry-company">Lendisty, LLC — Brea, CA</p>
+              <ul>
+                <li>Jumped headfirst into a scrappy startup environment — touching everything from digital asset production to engineering correspondence, and genuinely loving every bit of it.</li>
+                <li>Built and QA'd large digital delivery packages from scratch, ensuring every piece was polished and presentation-ready before it ever reached a client.</li>
+                <li>Kept multiple team leads organized and on schedule — the kind of behind-the-scenes work that makes everything look effortless from the outside.</li>
+              </ul>
+            </div>
+            <p class="resume-entry-date">Mar 2017 – Aug 2017</p>
+          </div>
+        </div>
+
+        <div class="resume-block">
+          <span class="resume-block-label">Core Competencies</span>
+          <div class="competency-grid">
+            <span class="competency-item">Data Validation & Reporting</span>
+            <span class="competency-item">Automated Report Configuration</span>
+            <span class="competency-item">Cross-functional Coordination</span>
+            <span class="competency-item">Technical Documentation QA</span>
+            <span class="competency-item">SOX / ITGC Compliance</span>
+            <span class="competency-item">Audit Support</span>
+            <span class="competency-item">SQL (Intermediate)</span>
+            <span class="competency-item">Power BI · Tableau</span>
+          </div>
+        </div>
+
+        <div class="resume-block">
+          <span class="resume-block-label">Tech Stack</span>
+          <div class="tag-row">
+            <span class="tag">HTML5</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+            <span class="tag">React.js</span><span class="tag">Node.js</span><span class="tag">jQuery</span>
+            <span class="tag">AJAX</span><span class="tag">Bootstrap</span><span class="tag">MySQL</span>
+            <span class="tag">MongoDB</span><span class="tag">Firebase</span><span class="tag">Git</span>
+            <span class="tag">Heroku</span><span class="tag">Bluebeam</span>
+          </div>
+        </div>
+
+        <div class="resume-block">
+          <span class="resume-block-label">Education</span>
+          <div class="resume-entry">
+            <div>
+              <p class="resume-entry-title">MERN Full-Stack Development</p>
+              <p class="resume-entry-company">University of California, Irvine</p>
+            </div>
+            <p class="resume-entry-date">Feb 2019</p>
+          </div>
+          <div class="resume-entry">
+            <div>
+              <p class="resume-entry-title">Computer Information Systems</p>
+              <p class="resume-entry-company">Fullerton College</p>
+            </div>
+            <p class="resume-entry-date">May 2018</p>
+          </div>
+          <div class="resume-entry">
+            <div>
+              <p class="resume-entry-title">BA Asian American Studies · BA Cultural Anthropology</p>
+              <p class="resume-entry-company">University of California, Santa Barbara</p>
+            </div>
+            <p class="resume-entry-date">Jun 2009</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ INDUSTRY ══ -->
+  <section id="industry">
+    <p class="section-eyebrow">Beyond the Screen</p>
+    <h2 class="section-title">Industry Experience</h2>
+    <p class="industry-intro">
+      My professional story doesn't start and end at a terminal. Years spent in fine dining and live entertainment honed skills no bootcamp teaches — reading a room, staying composed under pressure, and delivering at a standard that guests can actually feel.
+    </p>
+
+    <div class="industry-grid">
+      <div class="industry-card">
+        <div class="industry-icon">🍷</div>
+        <h3>Sommelier</h3>
+        <p>Certified through both the Court of Master Sommeliers and the Wine & Spirit Education Trust. Deep knowledge of Old World and New World producers, seasonal pairing development, and collaborative work with kitchen teams on tasting menus.</p>
+        <div class="cert-row">
+          <span class="cert-badge">CMS Level 1 – Introductory</span>
+          <span class="cert-badge blue">WSET Level 2</span>
+        </div>
+      </div>
+      <div class="industry-card">
+        <div class="industry-icon">🏰</div>
+        <h3>Fine Dining Service</h3>
+        <p>Nearly a decade at Carthay Circle Restaurant at Disneyland Resort — one of the most demanding fine dining environments in Southern California. Four-star service standards, high-volume guest flow, and a culture of excellence under the Disney brand.</p>
+        <div class="cert-row">
+          <span class="cert-badge orange">Allergy & Special Needs Trained</span>
+          <span class="cert-badge orange">BOH Experience</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Industry timeline -->
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">Mar 2024 – Present</span>
+          <span class="timeline-company">Topgolf</span>
+          <span class="timeline-location">Montebello, CA</span>
+        </div>
+        <div class="timeline-content">
+          <h3>Bay Host</h3>
+          <ul>
+            <li>Joined the opening crew at Montebello — helped write the playbook for service culture at a brand-new venue from day one, setting the tone before the first tee shot was ever taken.</li>
+            <li>Brought fine dining sensibilities into a decidedly non-traditional restaurant setting: reading the bay, anticipating needs, and delivering food and beverage with the timing and accuracy of a seasoned service professional — just with more fist pumps.</li>
+            <li>Guide first-time players through the Topgolf technology and game modes with genuine enthusiasm — because when guests understand what they're playing, they have more fun, stay longer, and come back.</li>
+            <li>Maintain the standard of a clean, organized, welcoming space throughout every visit — the hospitality fundamentals don't change just because there's a golf club involved.</li>
+            <li>Channeled a real love of golf into the work — learning the game properly, using every perk the job offers, and bringing that passion into every guest interaction.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">2021 – Present</span>
+          <span class="timeline-company">Club Level Wine Cellar</span>
+        </div>
+        <div class="timeline-content">
+          <h3>Sommelier</h3>
+          <ul>
+            <li>Became the resident wine authority — able to speak fluently about any bottle on the list, from the bubbles by the glass to the heavy-hitters tucked in the cellar.</li>
+            <li>Kept every service touchpoint clean, compliant, and guest-ready — because attention to health and sanitation is just another form of hospitality done right.</li>
+            <li>Navigated multiple POS systems and moved real volume of cash daily without breaking a sweat or a smile.</li>
+            <li>Built genuine connections with guests across all walks of life — the kind of interpersonal range that only comes from years of actually caring about the people in front of you.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-meta">
+          <span class="timeline-date">May 2011 – Dec 2019</span>
+          <span class="timeline-company">Carthay Circle Restaurant</span>
+          <span class="timeline-location">Disneyland Resort</span>
+        </div>
+        <div class="timeline-content">
+          <h3>Sommelier · Server · Host · Busser</h3>
+          <ul>
+            <li>Spent nearly a decade in one of Southern California's most demanding fine dining rooms — and somehow kept getting better at it every year.</li>
+            <li>Guided guests through menus with genuine enthusiasm, turning a dinner decision into a story — and a one-time visitor into a return reservation.</li>
+            <li>Partnered with the chef and management team daily to craft seasonal pairings and beverage programs that actually made sense together, not just looked good on paper.</li>
+            <li>Handled guest concerns with professionalism and grace under the scrutiny of one of the world's most recognizable brands — and never once compromised the four-star standard.</li>
+            <li>Managed thousands of dollars in daily cash transactions through a live POS system with the kind of accuracy that never made the manager nervous.</li>
+            <li>Worked every position in the room at some point — host, busser, server, sommelier — which means I understand the full operation, not just my corner of it.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- Industry visual banner -->
+    <div class="visual-banner">
+      <svg viewBox="0 0 1060 130" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="il" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0a0f0a" stop-opacity="1"/><stop offset="5%" stop-color="#0a0f0a" stop-opacity="0"/></linearGradient>
+          <linearGradient id="ir" x1="0" y1="0" x2="1" y2="0"><stop offset="95%" stop-color="#0a0f0a" stop-opacity="0"/><stop offset="100%" stop-color="#0a0f0a" stop-opacity="1"/></linearGradient>
+        </defs>
+        <rect width="1060" height="130" fill="#0a0f0a"/>
+        <!-- Tech block -->
+        <rect x="60" y="24" width="240" height="82" rx="6" fill="#0d1a0d" stroke="#2a3a2a" stroke-width="1"/>
+        <text x="80" y="46" font-family="Inter,sans-serif" font-size="10" fill="#444" letter-spacing="0.15em">TECH</text>
+        <rect x="80" y="54" width="60" height="4" rx="2" fill="#c8f0a0" opacity="0.4"/>
+        <rect x="80" y="64" width="90" height="4" rx="2" fill="#a0c8f0" opacity="0.35"/>
+        <rect x="80" y="74" width="45" height="4" rx="2" fill="#c8f0a0" opacity="0.25"/>
+        <rect x="80" y="84" width="75" height="4" rx="2" fill="#555" opacity="0.2"/>
+        <!-- Plus -->
+        <text x="318" y="74" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" fill="#2a2a2a">+</text>
+        <!-- Hospitality block -->
+        <rect x="370" y="24" width="240" height="82" rx="6" fill="#1a0f0a" stroke="#3a2a1a" stroke-width="1"/>
+        <text x="390" y="46" font-family="Inter,sans-serif" font-size="10" fill="#444" letter-spacing="0.15em">HOSPITALITY</text>
+        <text x="388" y="76" font-family="DM Serif Display,serif" font-size="22" fill="#f0c8a0" opacity="0.55">🍷 ⛳ 🏰</text>
+        <!-- Equals -->
+        <text x="628" y="68" text-anchor="middle" font-family="Inter,sans-serif" font-size="26" fill="#2a2a2a">=</text>
+        <!-- Result block -->
+        <rect x="680" y="24" width="280" height="82" rx="6" fill="#101a18" stroke="#1a3a2a" stroke-width="1"/>
+        <text x="700" y="46" font-family="Inter,sans-serif" font-size="10" fill="#444" letter-spacing="0.15em">THE FULL PICTURE</text>
+        <text x="700" y="76" font-family="Inter,sans-serif" font-size="13" fill="#c8f0a0" opacity="0.75">Alvin Joseph Garcia</text>
+        <rect x="700" y="86" width="200" height="3" rx="1.5" fill="#c8f0a0" opacity="0.15"/>
+        <rect width="1060" height="130" fill="url(#il)"/>
+        <rect width="1060" height="130" fill="url(#ir)"/>
+      </svg>
+    </div>
+
+    <p style="font-size:14px; color:var(--text-muted); max-width:580px; line-height:1.8; margin-top: 40px;">
+      These industries taught me that <strong style="color:var(--text)">precision and presence aren't opposites</strong>. Whether I'm tracking a software release or reading a hitting bay full of first-time golfers, the standard is the same: know the product deeply, read the room, and deliver without excuses.
+    </p>
+  </section>
+
+  <!-- ══ CONTACT ══ -->
+  <section id="contact">
+    <p class="section-eyebrow">Get in Touch</p>
+    <h2 class="section-title">Let's Connect</h2>
+    <p style="color:var(--text-muted); max-width:480px; margin-bottom:48px; line-height:1.8;">
+      Open to conversations about technical project coordination, front-end development, and hybrid tech/ops roles. Feel free to reach out on any of the channels below.
+    </p>
+
+    <div class="contact-grid">
+      <a href="mailto:alvinjoseph.garcia@gmail.com" class="contact-link">
+        <span class="contact-link-icon">✉</span>
+        <div><span class="contact-link-label">Email</span>alvinjoseph.garcia@gmail.com</div>
+      </a>
+      <a href="tel:6268270249" class="contact-link">
+        <span class="contact-link-icon">☎</span>
+        <div><span class="contact-link-label">Phone</span>(626) 827-0249</div>
+      </a>
+      <a href="https://linkedin.com/in/alvingarcia" target="_blank" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        <div><span class="contact-link-label">LinkedIn</span>/in/alvingarcia</div>
+      </a>
+      <a href="https://github.com/bandiddy" target="_blank" class="contact-link">
+        <span class="contact-link-icon">⌥</span>
+        <div><span class="contact-link-label">GitHub</span>github.com/bandiddy</div>
+      </a>
+    </div>
+
+    <!-- Contact illustration -->
+    <div class="visual-banner" style="max-width: 640px; margin-top: 56px;">
+      <svg viewBox="0 0 640 180" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="cl" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0a0f0a" stop-opacity="1"/><stop offset="10%" stop-color="#0a0f0a" stop-opacity="0"/></linearGradient>
+          <linearGradient id="cr" x1="0" y1="0" x2="1" y2="0"><stop offset="90%" stop-color="#0a0f0a" stop-opacity="0"/><stop offset="100%" stop-color="#0a0f0a" stop-opacity="1"/></linearGradient>
+        </defs>
+        <rect width="640" height="180" fill="#0a0f0a"/>
+        <!-- Envelope -->
+        <rect x="218" y="38" width="204" height="104" rx="6" fill="#0d1a0d" stroke="#2a3a2a" stroke-width="1.5"/>
+        <polygon points="218,38 320,108 422,38" fill="none" stroke="#c8f0a0" stroke-width="1" opacity="0.35"/>
+        <rect x="238" y="98" width="80" height="4" rx="2" fill="#555" opacity="0.35"/>
+        <rect x="238" y="110" width="122" height="4" rx="2" fill="#555" opacity="0.25"/>
+        <rect x="238" y="122" width="96" height="4" rx="2" fill="#555" opacity="0.2"/>
+        <rect x="238" y="134" width="60" height="4" rx="2" fill="#c8f0a0" opacity="0.25"/>
+        <text x="318" y="72" text-anchor="middle" font-family="Inter,sans-serif" font-size="20" fill="#c8f0a0" opacity="0.1">@</text>
+        <!-- Left circle -->
+        <circle cx="118" cy="90" r="38" fill="#141e14" stroke="#2a3a2a" stroke-width="1"/>
+        <text x="118" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="22">💼</text>
+        <!-- Right circle -->
+        <circle cx="522" cy="90" r="38" fill="#141e14" stroke="#2a3a2a" stroke-width="1"/>
+        <text x="522" y="97" text-anchor="middle" font-family="Inter,sans-serif" font-size="22">🤝</text>
+        <!-- Connectors -->
+        <line x1="156" y1="90" x2="218" y2="90" stroke="#2a3a2a" stroke-width="1" stroke-dasharray="4,4"/>
+        <line x1="422" y1="90" x2="484" y2="90" stroke="#2a3a2a" stroke-width="1" stroke-dasharray="4,4"/>
+        <rect width="640" height="180" fill="url(#cl)"/>
+        <rect width="640" height="180" fill="url(#cr)"/>
+      </svg>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Alvin Joseph Garcia</p>
+    <p>Walnut, CA 91789</p>
+  </footer>
+
+  <script>
+    function show(id) {
+      document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+      document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      document.getElementById('nav-' + id).classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
